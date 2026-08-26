@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Pilhas de fontes de sistema — sem dependência de rede em build time,
+     o que importa bastante aqui: essas instâncias vão rodar em containers
+     Docker isolados por grupo, muitas vezes sem acesso à internet liberado
+     durante o build. Ainda assim, mantém a identidade: uma serifada com
+     personalidade para títulos, uma sans neutra para o corpo e uma mono
+     para dados tabulares (preços, IDs de pedido). */
+  --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-canvas text-ink antialiased;
+  }
+}
+
+/* Textura de "recibo": borda pontilhada usada no resumo do carrinho e do
+   pedido — é o elemento de assinatura visual do sistema, reforçando a
+   metáfora de nota fiscal em vez de mais um card genérico de dashboard. */
+.receipt-divider {
+  border-top: 1px dashed theme('colors.border');
+}
+
+.price-tag {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}

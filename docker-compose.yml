@@ -1,0 +1,156 @@
+version: '3.8'
+
+# Sobe 6 pares (backend + frontend) totalmente isolados entre si — um par
+# por grupo da turma. Cada backend tem seu próprio arquivo SQLite (volume
+# nomeado), então o que um grupo faz (compra, avaliação, alteração de
+# estoque) nunca aparece para os outros.
+#
+# Portas de cada grupo:
+#   Grupo 1: frontend http://localhost:3100  | api http://localhost:3101
+#   Grupo 2: frontend http://localhost:3200  | api http://localhost:3201
+#   Grupo 3: frontend http://localhost:3300  | api http://localhost:3301
+#   Grupo 4: frontend http://localhost:3400  | api http://localhost:3401
+#   Grupo 5: frontend http://localhost:3500  | api http://localhost:3501
+#   Grupo 6: frontend http://localhost:3600  | api http://localhost:3601
+#
+# Uso:
+#   docker compose up --build -d
+#   (cada backend roda o seed automaticamente no primeiro start, se o
+#   banco daquele volume ainda não existir — não precisa rodar nada à mão)
+#
+# Para adicionar/remover grupos, copie um bloco "backend-N" e "frontend-N"
+# e ajuste a faixa de portas (N00/N01).
+
+x-backend-common: &backend-common
+  build:
+    context: ./backend
+  environment:
+    PORT: 3001
+    JWT_EXPIRES_IN: 1d
+
+x-frontend-common: &frontend-common
+  build:
+    context: ./frontend
+
+services:
+  backend-1:
+    <<: *backend-common
+    environment:
+      PORT: 3001
+      DATABASE_PATH: /app/data/grupo-1.sqlite
+      JWT_SECRET: segredo-grupo-1
+      FRONTEND_URL: http://localhost:3100
+    ports: ['3101:3001']
+    volumes: ['grupo-1-data:/app/data']
+
+  frontend-1:
+    <<: *frontend-common
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3101
+    ports: ['3100:3000']
+    depends_on: [backend-1]
+
+  backend-2:
+    <<: *backend-common
+    environment:
+      PORT: 3001
+      DATABASE_PATH: /app/data/grupo-2.sqlite
+      JWT_SECRET: segredo-grupo-2
+      FRONTEND_URL: http://localhost:3200
+    ports: ['3201:3001']
+    volumes: ['grupo-2-data:/app/data']
+
+  frontend-2:
+    <<: *frontend-common
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3201
+    ports: ['3200:3000']
+    depends_on: [backend-2]
+
+  backend-3:
+    <<: *backend-common
+    environment:
+      PORT: 3001
+      DATABASE_PATH: /app/data/grupo-3.sqlite
+      JWT_SECRET: segredo-grupo-3
+      FRONTEND_URL: http://localhost:3300
+    ports: ['3301:3001']
+    volumes: ['grupo-3-data:/app/data']
+
+  frontend-3:
+    <<: *frontend-common
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3301
+    ports: ['3300:3000']
+    depends_on: [backend-3]
+
+  backend-4:
+    <<: *backend-common
+    environment:
+      PORT: 3001
+      DATABASE_PATH: /app/data/grupo-4.sqlite
+      JWT_SECRET: segredo-grupo-4
+      FRONTEND_URL: http://localhost:3400
+    ports: ['3401:3001']
+    volumes: ['grupo-4-data:/app/data']
+
+  frontend-4:
+    <<: *frontend-common
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3401
+    ports: ['3400:3000']
+    depends_on: [backend-4]
+
+  backend-5:
+    <<: *backend-common
+    environment:
+      PORT: 3001
+      DATABASE_PATH: /app/data/grupo-5.sqlite
+      JWT_SECRET: segredo-grupo-5
+      FRONTEND_URL: http://localhost:3500
+    ports: ['3501:3001']
+    volumes: ['grupo-5-data:/app/data']
+
+  frontend-5:
+    <<: *frontend-common
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3501
+    ports: ['3500:3000']
+    depends_on: [backend-5]
+
+  backend-6:
+    <<: *backend-common
+    environment:
+      PORT: 3001
+      DATABASE_PATH: /app/data/grupo-6.sqlite
+      JWT_SECRET: segredo-grupo-6
+      FRONTEND_URL: http://localhost:3600
+    ports: ['3601:3001']
+    volumes: ['grupo-6-data:/app/data']
+
+  frontend-6:
+    <<: *frontend-common
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3601
+    ports: ['3600:3000']
+    depends_on: [backend-6]
+
+volumes:
+  grupo-1-data:
+  grupo-2-data:
+  grupo-3-data:
+  grupo-4-data:
+  grupo-5-data:
+  grupo-6-data:
