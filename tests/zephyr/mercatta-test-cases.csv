@@ -1,0 +1,259 @@
+"Name","Objective","Precondition","Test Script (BDD)","Labels","Priority"
+"Buscar produto por nome exato","Validar o cenário ""Buscar produto por nome exato"" da funcionalidade ""Busca de Produtos"".","Dado que eu estou na página inicial do sistema
+E existe um produto cadastrado com o nome ""Air Fryer Digital 5L""","Given que eu estou na página inicial do sistema
+And existe um produto cadastrado com o nome ""Air Fryer Digital 5L""
+When eu digitar ""Air Fryer Digital 5L"" no campo de busca
+And pressionar Enter ou clicar no botão de busca
+Then o sistema deve exibir o produto ""Air Fryer Digital 5L"" como primeiro ou único resultado
+And o resultado deve conter as informações corretas do produto","mercatta,bdd,automatizado","Normal"
+"Buscar termo com acentuação","Validar o cenário ""Buscar termo com acentuação"" da funcionalidade ""Busca de Produtos"".","Dado que eu estou na página inicial do sistema
+E existe um produto cadastrado com o nome ""O Poder do Hábito""","Given que eu estou na página inicial do sistema
+And existe um produto cadastrado com o nome ""O Poder do Hábito""
+When eu digitar ""hábito"" no campo de busca
+And pressionar Enter
+Then o sistema deve retornar o produto ""O Poder do Hábito"" como resultado
+And a busca deve ser insensível a acentos","mercatta,bdd,automatizado","Normal"
+"Buscar termo com caracteres especiais (aspas)","Validar o cenário ""Buscar termo com caracteres especiais (aspas)"" da funcionalidade ""Busca de Produtos"".","Dado que eu estou na página inicial do sistema
+E existem produtos com aspas duplas no nome: ""Notebook UltraBook 14\"" i5"" e ""Monitor 27\"" 144Hz UltraView""","Given que eu estou na página inicial do sistema
+And existem produtos com aspas duplas no nome: ""Notebook UltraBook 14\"" i5"" e ""Monitor 27\"" 144Hz UltraView""
+When eu digitar "" (aspas duplas) no campo de busca
+And pressionar Enter
+Then o sistema deve retornar os produtos que contêm aspas duplas no texto
+And não deve apresentar erro ou mensagem de falha","mercatta,bdd,automatizado","Normal"
+"Buscar por subtítulo","Validar o cenário ""Buscar por subtítulo"" da funcionalidade ""Busca de Produtos"".","Dado que eu estou na página inicial do sistema
+E existe um produto ""O Poder do Hábito"" com subtítulo/editora ""Editora Objetiva""","Given que eu estou na página inicial do sistema
+And existe um produto ""O Poder do Hábito"" com subtítulo/editora ""Editora Objetiva""
+When eu digitar ""Editora Objetiva"" no campo de busca
+And pressionar Enter
+Then o sistema deve retornar o produto ""O Poder do Hábito"" como resultado
+And a busca deve considerar subtítulos como termo válido","mercatta,bdd,automatizado","Normal"
+"Adicionar produto ao carrinho com estoque esgotado","Validar o cenário ""Adicionar produto ao carrinho com estoque esgotado"" da funcionalidade ""Carrinho de Compras"".","Dado que eu estou logado no sistema
+E o produto possui estoque = 0 (esgotado)","Given que eu estou logado no sistema
+And o produto possui estoque = 0 (esgotado)
+When eu acessar a página do produto
+And clicar em ""Adicionar ao Carrinho""
+Then o sistema deve informar que o produto está indisponível
+And NÃO deve permitir a adição ao carrinho","mercatta,bdd,automatizado","Normal"
+"Tentar adicionar quantidade maior que o estoque","Validar o cenário ""Tentar adicionar quantidade maior que o estoque"" da funcionalidade ""Carrinho de Compras"".","Dado que eu estou logado no sistema
+E o produto possui estoque = 5","Given que eu estou logado no sistema
+And o produto possui estoque = 5
+When eu tentar adicionar 5 unidades ao carrinho pela primeira vez
+And tentar adicionar mais 5 unidades (totalizando 10)
+Then o sistema deve permitir a adição inicial de 5 unidades
+But deve bloquear a segunda adição
+And exibir a mensagem ""Quantidade indisponível em estoque (estoque: 5)""","mercatta,bdd,automatizado","Normal"
+"Aumentar quantidade de item com estoque limitado no carrinho","Validar o cenário ""Aumentar quantidade de item com estoque limitado no carrinho"" da funcionalidade ""Carrinho de Compras"".","Dado que eu estou logado no sistema
+E o produto possui estoque = 1
+E eu já adicionei 1 unidade ao carrinho","Given que eu estou logado no sistema
+And o produto possui estoque = 1
+And eu já adicionei 1 unidade ao carrinho
+When eu tentar alterar a quantidade de 1 para 3
+And clicar em ""Atualizar""
+Then o sistema deve impedir a atualização
+And exibir a mensagem ""Quantidade indisponível em estoque (estoque: 1)""","mercatta,bdd,automatizado","Normal"
+"Checkout com dados válidos","Validar o cenário ""Checkout com dados válidos"" da funcionalidade ""Finalizar Pedido"".","Dado que eu estou logado no sistema
+E meu carrinho possui itens","Given que eu estou logado no sistema
+And meu carrinho possui itens
+When eu acessar a página de finalização de pedido
+And preencher o endereço
+And clicar em ""Finalizar Pedido""
+Then o sistema deve processar o pedido
+And deve apresentar uma etapa ou opção para seleção de forma de pagamento
+And o pedido deve ser gerado com sucesso","mercatta,bdd,automatizado","Normal"
+"Checkout com carrinho vazio","Validar o cenário ""Checkout com carrinho vazio"" da funcionalidade ""Finalizar Pedido"".","Dado que eu estou logado no sistema
+E meu carrinho está vazio","Given que eu estou logado no sistema
+And meu carrinho está vazio
+When eu tentar acessar ""Finalizar Pedido""
+Then o sistema deve bloquear a ação
+And o botão ""Finalizar Pedido"" deve ser substituído por ""Continuar Comprando""
+And ao clicar em ""Continuar Comprando"", o usuário deve ser redirecionado para a página inicial","mercatta,bdd,automatizado","Normal"
+"Cadastrar com dados válidos","Validar o cenário ""Cadastrar com dados válidos"" da funcionalidade ""Criar Conta"".","Dado que eu estou na página de criação de conta","Given que eu estou na página de criação de conta
+When eu preencher os campos:
+  | Nome      | João Wolf                    |
+  | E-mail    | joao@wolf.com               |
+  | Senha     | senha456                    |
+  | Endereço  | Rua Boca de Lobo, 459, Matilha |
+And clicar em ""Cadastrar""
+Then a conta deve ser criada com sucesso
+And o usuário deve ser logado automaticamente
+And deve ser redirecionado para a página inicial","mercatta,bdd,automatizado","Normal"
+"Cadastrar com nome incluindo números","Validar o cenário ""Cadastrar com nome incluindo números"" da funcionalidade ""Criar Conta"".","Dado que eu estou na página de criação de conta","Given que eu estou na página de criação de conta
+When eu preencher os campos:
+  | Nome      | João da Silva 4223 2346      |
+  | E-mail    | joao32@wolf.com              |
+  | Senha     | 123senha                     |
+  | Endereço  | Rua Exemplo, 123             |
+And clicar em ""Cadastrar""
+Then o sistema deve exibir a mensagem de erro ""O nome deve conter apenas letras""
+And a conta NÃO deve ser criada","mercatta,bdd,automatizado","Normal"
+"Cadastrar com e-mail já utilizado","Validar o cenário ""Cadastrar com e-mail já utilizado"" da funcionalidade ""Criar Conta"".","Dado que já existe uma conta com o e-mail ""joao@exemplo.com""
+E eu estou na página de criação de conta","Given que já existe uma conta com o e-mail ""joao@exemplo.com""
+And eu estou na página de criação de conta
+When eu preencher os campos:
+  | Nome      | João Silva Lobo              |
+  | E-mail    | joao@exemplo.com             |
+  | Senha     | senha890                     |
+  | Endereço  | Rua do coiote, 32, Casa Amarela |
+And clicar em ""Cadastrar""
+Then o sistema deve bloquear a criação da conta
+And exibir a mensagem em vermelho ""Já existe uma conta com este e-mail""","mercatta,bdd,automatizado","Normal"
+"Cadastrar deixando campos obrigatórios vazios","Validar o cenário ""Cadastrar deixando campos obrigatórios vazios"" da funcionalidade ""Criar Conta"".","Dado que eu estou na página de criação de conta","Given que eu estou na página de criação de conta
+When eu preencher os campos:
+  | Nome      | (deixar em branco)          |
+  | E-mail    | joao@exemplo.com             |
+  | Senha     | senha890                     |
+  | Endereço  | Rua do coiote, 32, Casa Amarela |
+And clicar em ""Cadastrar""
+Then o sistema deve bloquear o cadastro
+And destacar o campo ""Nome"" com borda vermelha
+And exibir a mensagem ""Por favor, preencha o campo""","mercatta,bdd,automatizado","Normal"
+"Estoque atualiza após compra","Validar o cenário ""Estoque atualiza após compra"" da funcionalidade ""Contagem de Estoque"".","Dado que eu estou logado no sistema
+E o produto ""Bicicleta Ergométrica ProSpin"" possui estoque = 5","Given que eu estou logado no sistema
+And o produto ""Bicicleta Ergométrica ProSpin"" possui estoque = 5
+When eu adicionar 3 unidades ao carrinho
+And finalizar a compra com sucesso
+Then o sistema deve atualizar o estoque disponível para 2 unidades
+And o catálogo deve mostrar ""Últimas 2 unidades""
+And a página do produto deve mostrar estoque = 2","mercatta,bdd,automatizado","Normal"
+"Sistema limita quantidade do item de acordo com o estoque","Validar o cenário ""Sistema limita quantidade do item de acordo com o estoque"" da funcionalidade ""Contagem de Estoque"".","Dado que eu estou logado no sistema
+E o produto ""SSD NVMe 1TB SpeedDrive"" possui estoque = 1","Given que eu estou logado no sistema
+And o produto ""SSD NVMe 1TB SpeedDrive"" possui estoque = 1
+When eu acessar a página do produto
+And tentar selecionar a quantidade
+Then o sistema deve limitar as opções de quantidade a 1
+And não deve permitir selecionar números maiores que o estoque disponível","mercatta,bdd,automatizado","Normal"
+"Ordenar produtos por preço ascendente (menor ao maior)","Validar o cenário ""Ordenar produtos por preço ascendente (menor ao maior)"" da funcionalidade ""Filtros de Produtos"".","Dado que eu estou na página da categoria ""Casa e Cozinha""
+E existem pelo menos 3 produtos com preços diferentes","Given que eu estou na página da categoria ""Casa e Cozinha""
+And existem pelo menos 3 produtos com preços diferentes
+When eu selecionar o filtro ""Menor preço""
+Then o sistema deve exibir os produtos em ordem crescente de preço
+And o produto de menor valor deve aparecer no topo da lista","mercatta,bdd,automatizado","Normal"
+"Ordenar produtos por data de lançamento","Validar o cenário ""Ordenar produtos por data de lançamento"" da funcionalidade ""Filtros de Produtos"".","Dado que eu estou na página inicial do sistema
+E existem produtos com datas de lançamento diferentes","Given que eu estou na página inicial do sistema
+And existem produtos com datas de lançamento diferentes
+When eu aplicar o filtro ""Produtos Recentes""
+Then o sistema deve organizar os produtos do mais recente para o mais antigo
+And o produto com data de lançamento mais nova deve ser o primeiro da lista","mercatta,bdd,automatizado","Normal"
+"Validar filtro de categoria ""Hardware""","Validar o cenário ""Validar filtro de categoria ""Hardware"""" da funcionalidade ""Filtros de Produtos"".","Dado que eu estou na página do catálogo de produtos
+E existem produtos de diversas categorias","Given que eu estou na página do catálogo de produtos
+And existem produtos de diversas categorias
+When eu selecionar a categoria ""Hardware"" no filtro
+Then a página deve mostrar apenas os produtos pertencentes à categoria ""Hardware""
+And nenhum produto de outras categorias deve ser exibido","mercatta,bdd,automatizado","Normal"
+"Realizar login com sucesso","Validar o cenário ""Realizar login com sucesso"" da funcionalidade ""Login"".","Dado que eu tenho uma conta cadastrada com e-mail ""maria@exemplo.com"" e senha ""senha123""
+E estou na página de login","Given que eu tenho uma conta cadastrada com e-mail ""maria@exemplo.com"" e senha ""senha123""
+And estou na página de login
+When eu preencher com os dados
+And clicar em ""Entrar""
+Then o sistema deve autenticar o usuário
+And redirecionar para a página inicial ou página da conta
+And o usuário deve estar logado","mercatta,bdd,automatizado","Normal"
+"Tentar login com senha inválida","Validar o cenário ""Tentar login com senha inválida"" da funcionalidade ""Login"".","Dado que eu tenho uma conta cadastrada com e-mail ""maria@exemplo.com"" e senha ""senha123""
+E estou na página de login","Given que eu tenho uma conta cadastrada com e-mail ""maria@exemplo.com"" e senha ""senha123""
+And estou na página de login
+When eu preencher o e-mail com os dados
+And clicar em ""Entrar""
+Then o sistema deve exibir a mensagem de erro ""E-mail ou senha inválidos""
+And o usuário deve permanecer na página de login","mercatta,bdd,automatizado","Normal"
+"Tentar login com e-mail não cadastrado","Validar o cenário ""Tentar login com e-mail não cadastrado"" da funcionalidade ""Login"".","Dado que eu estou na página de login","Given que eu estou na página de login
+When eu preencher com os dados
+And clicar em ""Entrar""
+Then o sistema deve exibir uma mensagem de erro em vermelho
+And a mensagem deve ser ""E-mail ou senha inválidos""
+And o usuário deve permanecer na página de login","mercatta,bdd,automatizado","Normal"
+"Verificar se a saída de usuário está acessível independente da tela","Validar o cenário ""Verificar se a saída de usuário está acessível independente da tela"" da funcionalidade ""Logout"".","Dado que eu estou logado no sistema","Given que eu estou logado no sistema
+When eu navegar para a página de produto
+Then deve existir a opção de ""Sair"" ou ""Logout""
+When eu navegar para a página de busca
+Then deve existir a opção de ""Sair"" ou ""Logout""
+When eu navegar para a página de carrinho
+Then deve existir a opção de ""Sair"" ou ""Logout""
+And a posição do botão de logout deve ser consistente em todas as páginas","mercatta,bdd,automatizado","Normal"
+"Visualizar histórico de pedidos e validar status","Validar o cenário ""Visualizar histórico de pedidos e validar status"" da funcionalidade ""Meus Pedidos"".","Dado que eu estou logado no sistema
+E eu já realizei pedidos anteriormente","Given que eu estou logado no sistema
+And eu já realizei pedidos anteriormente
+When eu acessar a página ""Meus Pedidos""
+Then o sistema deve listar todos os meus pedidos
+And cada pedido deve ter um status coerente
+And pedidos com pagamento aprovado devem ter status ""Separação"" ou ""Enviado""
+And pedidos pendentes devem ter status ""Pendente""","mercatta,bdd,automatizado","Normal"
+"Validar performance aceitável com 500 usuários simultâneos","Validar o cenário ""Validar performance aceitável com 500 usuários simultâneos"" da funcionalidade ""Performance do Sistema"".","Dado que o ambiente de teste está configurado com monitoramento
+E o catálogo está populado com dados de teste
+E a ferramenta de carga está configurada","Given que o ambiente de teste está configurado com monitoramento
+And o catálogo está populado com dados de teste
+And a ferramenta de carga está configurada
+When eu executar o teste de carga com 500 usuários simultâneos
+And a carga for mantida por 10 minutos
+Then o tempo de resposta médio da página inicial deve ser ≤ 2 segundos
+And o tempo de resposta da busca deve ser ≤ 2 segundos
+And a taxa de erros deve ser ≤ 1%
+And a CPU do servidor deve ser ≤ 70% durante o pico
+And o sistema deve operar dentro das margens definidas","mercatta,performance,manual","High"
+"Identificar o limite máximo de usuários no fluxo de checkout","Validar o cenário ""Identificar o limite máximo de usuários no fluxo de checkout"" da funcionalidade ""Performance do Sistema"".","Dado que o ambiente de teste está isolado com monitoramento ativo
+E a ferramenta de carga está configurada
+E cada usuário virtual executará o fluxo completo de compra","Given que o ambiente de teste está isolado com monitoramento ativo
+And a ferramenta de carga está configurada
+And cada usuário virtual executará o fluxo completo de compra
+When eu iniciar o teste com 50 usuários
+And aumentar a carga em 50 usuários a cada 2 minutos
+And monitorar as métricas: taxa de sucesso, tempo de resposta, erros, memória
+And continuar aumentando até que o tempo de resposta ultrapasse 10 segundos
+Then o sistema deve suportar pelo menos 500 usuários simultâneos
+And ao atingir o limite, deve retornar erro amigável ""Serviço indisponível, tente novamente""
+And após a carga ser reduzida, o sistema deve se recuperar sozinho
+And o ponto de ruptura deve ser registrado para análise","mercatta,performance,manual","High"
+"Adicionar avaliação na página do produto","Validar o cenário ""Adicionar avaliação na página do produto"" da funcionalidade ""Avaliação de Produtos"".","Dado que eu estou logado no sistema
+E estou na página do produto ""Fone de Ouvido Bluetooth XZ200""","Given que eu estou logado no sistema
+And estou na página do produto ""Fone de Ouvido Bluetooth XZ200""
+When eu selecionar a nota ""5"" estrelas
+And digitar o comentário ""Fone de ouvido brabo, parece que estou ouvindo a banda do meu lado!""
+And clicar em ""Enviar avaliação""
+Then o sistema deve validar o comentário
+And a avaliação deve ser adicionada à página do produto
+And o nome do usuário deve aparecer junto com a avaliação","mercatta,bdd,automatizado","Normal"
+"Remover avaliação do usuário","Validar o cenário ""Remover avaliação do usuário"" da funcionalidade ""Avaliação de Produtos"".","Dado que eu estou logado no sistema
+E eu já avaliei o produto anteriormente
+E estou na página do produto avaliado","Given que eu estou logado no sistema
+And eu já avaliei o produto anteriormente
+And estou na página do produto avaliado
+When eu clicar em ""Remover comentário""
+Then o sistema deve permitir que o autor remova sua avaliação
+And a avaliação deve desaparecer da página do produto","mercatta,bdd,automatizado","Normal"
+"Avaliar produto sem ter comprado","Validar o cenário ""Avaliar produto sem ter comprado"" da funcionalidade ""Avaliação de Produtos"".","Dado que eu estou logado no sistema
+E eu NUNCA comprei o produto ""Fone de Ouvido Bluetooth XZ200""","Given que eu estou logado no sistema
+And eu NUNCA comprei o produto ""Fone de Ouvido Bluetooth XZ200""
+When eu acessar a página do produto
+And selecionar a nota ""5"" estrelas
+And escrever o comentário ""Ótimo!""
+And tentar enviar a avaliação
+Then o sistema deve bloquear a avaliação
+And exibir a mensagem ""Apenas compradores podem avaliar este produto""","mercatta,bdd,automatizado","Normal"
+"Avaliar produto recém-comprado","Validar o cenário ""Avaliar produto recém-comprado"" da funcionalidade ""Avaliação de Produtos"".","Dado que eu estou logado no sistema
+E eu comprei o produto ""Teclado Mecânico ClickPro""
+E a compra foi finalizada com sucesso","Given que eu estou logado no sistema
+And eu comprei o produto ""Teclado Mecânico ClickPro""
+And a compra foi finalizada com sucesso
+When eu acessar a página do produto ""Teclado Mecânico ClickPro""
+And selecionar a nota ""4"" estrelas
+And digitar o comentário ""Teclado é bom mas, não é tudo isso que dizem""
+And clicar em ""Avaliar""
+Then a avaliação deve ser salva com sucesso
+And deve aparecer na página do produto
+And deve conter: nome do usuário, nota, comentário e data de postagem","mercatta,bdd,automatizado","Normal"
+"Atualização na descrição não afeta avaliações existentes","Validar o cenário ""Atualização na descrição não afeta avaliações existentes"" da funcionalidade ""Avaliação de Produtos"".","Dado que o produto possui avaliações registradas anteriormente
+E eu estou logado como administrador","Given que o produto possui avaliações registradas anteriormente
+And eu estou logado como administrador
+When eu atualizar a descrição do produto
+Then o sistema deve manter todas as avaliações existentes
+And a descrição deve ser a única informação alterada
+And nenhuma avaliação deve ser perdida ou modificada","mercatta,bdd,automatizado","Normal"
+"Verificar se a página mantém organização em diferentes resoluções","Validar o cenário ""Verificar se a página mantém organização em diferentes resoluções"" da funcionalidade ""Responsividade e Acessibilidade"".","Dado que eu estou na página inicial do sistema","Given que eu estou na página inicial do sistema
+When eu ajustar o zoom do navegador para 230%
+Then o layout deve se adaptar sem quebras significativas
+When eu ajustar para 160%
+Then o layout deve se adaptar sem quebras significativas
+When eu ajustar para 80%
+Then o layout deve se adaptar sem quebras significativas
+When eu ajustar para 60%
+Then o layout deve se adaptar sem quebras significativas
+And o sistema deve manter a usabilidade em todas as escalas","mercatta,bdd,automatizado","Normal"
