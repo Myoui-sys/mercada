@@ -84,7 +84,7 @@ export default function LoginPage() {
 
       <div className="mt-8 rounded-sm border border-dashed border-border p-3 text-xs text-muted">
         <p className="font-medium">Contas de teste (após rodar o seed):</p>
-        <p>admin@amazonsim.com / senha123</p>
+        <p>admin@mercatta.com / senha123</p>
         <p>maria@exemplo.com / senha123</p>
         <p>joao@exemplo.com / senha123</p>
       </div>

@@ -1,6 +1,6 @@
 export default () => ({
   port: parseInt(process.env.PORT ?? '3001', 10),
-  databasePath: process.env.DATABASE_PATH ?? './data/amazon-simulator.sqlite',
+  databasePath: process.env.DATABASE_PATH ?? './data/mercatta.sqlite',
   jwt: {
     secret: process.env.JWT_SECRET ?? 'dev-secret-nao-use-em-producao',
     expiresIn: process.env.JWT_EXPIRES_IN ?? '1d',

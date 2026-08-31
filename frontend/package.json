@@ -1,5 +1,5 @@
 {
-  "name": "amazon-simulator-frontend",
+  "name": "mercatta-frontend",
   "version": "1.0.0",
   "description": "Frontend do simulador de e-commerce (estilo Amazon) usado como sistema-alvo para o projeto final de Teste de Software.",
   "private": true,

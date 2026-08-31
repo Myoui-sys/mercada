@@ -20,7 +20,7 @@ Todo o código — back e front — é TypeScript.
 ## Estrutura do repositório
 
 ```
-amazon-simulator/
+mercatta/
 ├── backend/           # API NestJS
 │   ├── src/
 │   │   ├── modules/   # auth, users, categories, products, cart, orders, reviews
@@ -51,7 +51,7 @@ npm run seed        # popula o banco com produtos, categorias e usuários de tes
 npm run start:dev   # http://localhost:3001
 ```
 
-Documentaçcão interativa da API: `http://localhost:3001/api/docs`
+Documentação interativa da API: `http://localhost:3001/api/docs`
 
 ### 2. Frontend
 
@@ -68,7 +68,7 @@ npm run dev          # http://localhost:3000
 
 | E-mail                  | Senha      | Papel     | Observação                          |
 |--------------------------|------------|-----------|--------------------------------------|
-| admin@amazonsim.com      | senha123   | admin     | Pode criar/editar produtos e categorias |
+| admin@mercatta.com       | senha123   | admin     | Pode criar/editar produtos e categorias |
 | maria@exemplo.com        | senha123   | cliente   | Tem endereço cadastrado              |
 | joao@exemplo.com         | senha123   | cliente   | **Sem** endereço cadastrado (propositalmente — bom caso de teste para checkout) |
 
@@ -120,19 +120,23 @@ no `docker-compose.yml` e ajuste a faixa de portas — está comentado lá.
   (`backend/src/modules/orders/orders.service.spec.ts` e
   `backend/test/auth.e2e-spec.ts`) — unitário e e2e, respectivamente.
 
-## Rodando os testes do backend
+## Rodando os testes
 
 ```bash
-cd backend
-npm test          # testes unitários (ex: máquina de estados do pedido)
+npm test          # testes unitários do backend
 npm run test:e2e  # testes de ponta a ponta (auth, catálogo, permissões)
+npm run test:bdd:dry # valida e lista os cenários BDD ainda não automatizados
 ```
+
+Os arquivos em `tests/features` são especificações de aceitação. Os passos
+automatizados deverão ser adicionados em `tests/steps`; enquanto isso,
+`test:bdd:dry` evidencia os passos ainda pendentes sem executar o navegador.
 
 ## Notas para quem for usar isso em sala
 
 - O banco é SQLite: não precisa configurar um servidor de banco separado.
   Para reiniciar os dados de um grupo do zero, basta apagar o volume
-  correspondente (`docker volume rm amazon-simulator_grupo-N-data`) e subir
+  correspondente (`docker volume rm mercada_grupo-N-data`) e subir
   de novo.
 - As fontes usadas no frontend são pilhas de fonte de sistema (não
   dependem de baixar nada do Google Fonts) — o build funciona mesmo em

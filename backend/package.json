@@ -1,5 +1,5 @@
 {
-  "name": "amazon-simulator-backend",
+  "name": "mercatta-backend",
   "version": "1.0.0",
   "description": "API do simulador de e-commerce (estilo Amazon) usado como sistema-alvo para o projeto final de Teste de Software.",
   "private": true,

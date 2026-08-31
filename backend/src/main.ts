@@ -25,7 +25,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Amazon Simulator API')
+    .setTitle('Mercatta API')
     .setDescription(
       'API do sistema-alvo de e-commerce usado no projeto final de Teste de Software.',
     )

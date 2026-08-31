@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-DB_PATH="${DATABASE_PATH:-./data/amazon-simulator.sqlite}"
+DB_PATH="${DATABASE_PATH:-./data/mercatta.sqlite}"
 
 if [ ! -f "$DB_PATH" ]; then
   echo "[entrypoint] Banco não encontrado em $DB_PATH — rodando seed inicial..."

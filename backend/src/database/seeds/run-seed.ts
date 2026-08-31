@@ -26,7 +26,7 @@ dotenv.config();
 async function runSeed() {
   const dataSource = new DataSource({
     type: 'sqlite',
-    database: process.env.DATABASE_PATH ?? './data/amazon-simulator.sqlite',
+    database: process.env.DATABASE_PATH ?? './data/mercatta.sqlite',
     entities: [User, Category, Product, Review, Cart, CartItem, Order, OrderItem],
     synchronize: true,
   });
@@ -53,7 +53,7 @@ async function runSeed() {
 
   const admin = await userRepo.save(
     userRepo.create({
-      email: 'admin@amazonsim.com',
+      email: 'admin@mercatta.com',
       passwordHash,
       fullName: 'Administrador da Loja',
       role: UserRole.ADMIN,
