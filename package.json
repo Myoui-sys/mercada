@@ -1,0 +1,30 @@
+{
+  "name": "mercada",
+  "version": "1.0.0",
+  "description": "Sistema de e-commerce completo e funcional, estilo \"loja de tudo um pouco\",\r construído para servir como **sistema-alvo** em projetos de teste de\r software. Não é uma maquete: cadastro, login, catálogo com busca e filtro,\r carrinho, checkout com baixa real de estoque, histórico de pedidos e\r avaliações de produto funcionam de ponta a ponta.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Myoui-sys/mercada.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Myoui-sys/mercada/issues"
+  },
+  "homepage": "https://github.com/Myoui-sys/mercada#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.2.1",
+    "@playwright/test": "^1.62.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  }
+}
