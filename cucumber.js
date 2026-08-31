@@ -1,16 +1,29 @@
+const common = {
+  requireModule: ["ts-node/register"],
+  require: [
+    "tests/steps/**/*.ts",
+    "tests/support/**/*.ts"
+  ],
+  format: [
+    "progress",
+    "html:reports/cucumber-report.html"
+  ],
+  publishQuiet: true
+};
+
 module.exports = {
   default: {
-    requireModule: ["ts-node/register"],
-    require: [
-      "tests/steps/**/*.ts",
-      "tests/support/**/*.ts"
-    ],
+    ...common,
     paths: [
       "tests/features/**/*.feature"
     ],
-    format: [
-      "progress"
+    tags: "not @performance"
+  },
+  performance: {
+    ...common,
+    paths: [
+      "tests/features/performance.feature"
     ],
-    publishQuiet: true
+    tags: "@performance"
   }
 };

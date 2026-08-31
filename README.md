@@ -125,12 +125,24 @@ no `docker-compose.yml` e ajuste a faixa de portas — está comentado lá.
 ```bash
 npm test          # testes unitários do backend
 npm run test:e2e  # testes de ponta a ponta (auth, catálogo, permissões)
-npm run test:bdd:dry # valida e lista os cenários BDD ainda não automatizados
+npm run test:bdd:dry # valida o mapeamento dos steps sem abrir o navegador
 ```
 
-Os arquivos em `tests/features` são especificações de aceitação. Os passos
-automatizados deverão ser adicionados em `tests/steps`; enquanto isso,
-`test:bdd:dry` evidencia os passos ainda pendentes sem executar o navegador.
+Para executar os testes BDD, mantenha backend e frontend ativos, instale o
+navegador uma vez com `npx playwright install chromium` e execute:
+
+```bash
+npm run test:bdd
+```
+
+Por padrão, a aplicação é acessada em `http://localhost:3000`. Defina
+`BASE_URL` para testar outro endereço e `HEADED=true` para acompanhar o
+navegador aberto. Em caso de falha, screenshots são anexados ao relatório
+HTML em `reports/cucumber-report.html`.
+
+Os cenários marcados com `@performance` ficam fora da suíte de navegador.
+Eles exigem uma ferramenta de carga dedicada antes de `npm run
+test:performance` representar uma medição real.
 
 ## Notas para quem for usar isso em sala
 

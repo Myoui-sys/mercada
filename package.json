@@ -11,8 +11,9 @@
     "test": "npm run test:backend",
     "test:backend": "npm test --prefix backend -- --runInBand",
     "test:e2e": "npm run test:e2e --prefix backend -- --runInBand",
-    "test:bdd": "cucumber-js",
-    "test:bdd:dry": "cucumber-js --dry-run"
+    "test:bdd": "npm run seed && cucumber-js",
+    "test:bdd:dry": "cucumber-js --dry-run",
+    "test:performance": "cucumber-js --profile performance"
   },
   "repository": {
     "type": "git",

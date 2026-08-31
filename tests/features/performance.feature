@@ -1,4 +1,5 @@
 # language: pt
+@performance
 
 Funcionalidade: Performance do Sistema
   Como um administrador do sistema
